@@ -45,4 +45,41 @@ class EducationsController extends Controller
         $edu->delete();
         return redirect('/dashboard?active=education')->with('success', 'Sukses menghapus riwayat pendidikan');
     }
+    public function edit($id) {
+        $edu = Educations::findOrFail($id);
+        return view('admin.form-edit.form-edit-education', compact('edu'));
+    }
+    public function update(Request $request, $id) {
+        $validasi = Validator::make($request->all(), [
+            'tahun_awal_edukasi' => 'required',
+            'tahun_akhir_edukasi' => 'nullable',
+            'jurusan' => 'required',
+            'nama_sekolah' => 'required',
+            'detail_yang_dipelajari' => 'required',
+        ], [
+            'tahun_awal_edukasi.required' => 'Inputan ini wajib diisi!',
+            'jurusan.required' => 'Inputan ini wajib diisi!',
+            'nama_sekolah.required' => 'Inputan ini wajib diisi!',
+            'detail_yang_dipelajari.required' => 'Inputan ini wajib diisi!',
+        ]);
+        if ($validasi->fails()) {
+            return redirect('/dashboard?active=education')->withErrors($validasi)->withInput();
+        }
+        if ($request->tahun_akhir_edukasi < $request->tahun_awal_edukasi) {
+            return redirect()->back()->with('error_tahun_akhir_edukasi', 'Inputan tahun akhir tidak boleh kurang dari tahun awal');
+        }
+        $tahun_akhir_edukasi = 'present';
+        if ($request->tahun_akhir_edukasi != null) {
+            $tahun_akhir_edukasi = $request->tahun_akhir_edukasi;
+        }
+        $edu = Educations::findOrFail($id);
+        $edu->update([
+            'tahun_awal' => $request->tahun_awal_edukasi,
+            'tahun_akhir' => $tahun_akhir_edukasi,
+            'jurusan' => $request->jurusan,
+            'nama_sekolah' => $request->nama_sekolah,
+            'detail_yang_dipelajari' => $request->detail_yang_dipelajari
+        ]);
+        return redirect('/dashboard?active=education')->with('success', 'Sukses mengupdate riwayat edukasi anda!');
+    }
 }

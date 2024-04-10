@@ -291,12 +291,16 @@
                                             <form action="{{ route('destroy.experience', $experience->id) }}"
                                                 method="post">
                                                 @csrf
+                                                @method('DELETE')
                                                 <button type="submit" class="btn btn-primary">Ya</button>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <a href="{{ route('edit.experience', $experience->id) }}">
+                                <button type="button" class="btn btn-warning text-white">Edit</button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -422,12 +426,16 @@
                                             <form action="{{ route('destroy.education', $edu->id) }}"
                                                 method="post">
                                                 @csrf
+                                                @method('DELETE')
                                                 <button type="submit" class="btn btn-primary">Ya</button>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <a href="{{ route('edit.education', $edu->id) }}">
+                                <button type="button" class="btn btn-warning text-white">Edit</button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -524,12 +532,16 @@
                                             <form action="{{ route('destroy.project', $project->id) }}"
                                                 method="post">
                                                 @csrf
+                                                @method('DELETE')
                                                 <button type="submit" class="btn btn-primary">Ya</button>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <a href="{{ route('edit.project', $project->id) }}">
+                                <button type="button" class="btn btn-warning text-white">Edit</button>
+                            </a>
                         </div>
                     </div>
                 @endforeach
@@ -594,7 +606,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="btn btn-primary" type="button">Balas</button>
                                 </td>
                             </tr>
                         @endforeach
